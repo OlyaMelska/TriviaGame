@@ -5,7 +5,9 @@ let trivia = [
     answerOne: "Hector Barbossa",
     answerTwo: "Davy Jones",
     answerThree: "Will Turner",
-    correctAnswer: "Jack Sparrow"
+    correctAnswer: "Jack Sparrow",
+    correctAnswerImg: "./Images/jacksparrow.jpg",
+    wrongAnswerImg: "./Images/jackWrong.jpg"
   },
   {
     question:
@@ -13,7 +15,9 @@ let trivia = [
     answerOne: "Brian May",
     answerTwo: "Ben Hardy",
     answerThree: "Bruno Mars",
-    correctAnswer: "Rami Malek"
+    correctAnswer: "Rami Malek",
+    correctAnswerImg: "../Images/rami",
+    wrongAnswerImg: "../Images/ramiWrong.jpg"
   },
   {
     question:
@@ -21,28 +25,36 @@ let trivia = [
     answerOne: "Come here",
     answerTwo: "Sorry",
     answerThree: "I will always love you",
-    correctAnswer: "I just want to take another look at you"
+    correctAnswer: "I just want to take another look at you",
+    correctAnswerImg: "../Images/star.jpg",
+    wrongAnswerImg: "../Images/starWrong.jpg"
   },
   {
     question: "Which of Daenerys Targaryen's three dragons are the largest?",
     answerOne: "Viserion",
     answerTwo: "Viserys",
     answerThree: "Rhaegal",
-    correctAnswer: "Drogon"
+    correctAnswer: "Drogon",
+    correctAnswerImg: "../Images/drogon.jpg",
+    wrongAnswerImg: "../Images/drogonWrong.jpg"
   },
   {
     question: "What was wrong with the couch Ross returned to the store?",
     answerOne: "The colour was wrong",
     answerTwo: "It had a stain",
     answerThree: "It was torn",
-    correctAnswer: "It was cut in half"
+    correctAnswer: "It was cut in half",
+    correctAnswerImg: "../Images/couch.jpg",
+    wrongAnswerImg: "../Images/couchWrong.jpg"
   },
   {
     question: "'The Stranger Things' is a _____ original.",
     answerOne: "CW",
     answerTwo: "HBO",
     answerThree: "HULU",
-    correctAnswer: "Netflix"
+    correctAnswer: "Netflix",
+    correctAnswerImg: "../Images/netflix.jpg",
+    wrongAnswerImg: "../Images/narniaWrong.jpg"
   },
   {
     question:
@@ -50,14 +62,18 @@ let trivia = [
     answerOne: "Avengers: Infinity War",
     answerTwo: "Venom",
     answerThree: "Aquaman",
-    correctAnswer: "Black Panther"
+    correctAnswer: "Black Panther",
+    correctAnswerImg: "../Images/wakanda.jpg",
+    wrongAnswerImg: "../Images/wakandaWrong.jpg"
   },
   {
     question: "What is the name of Hagrid’s big dog?",
     answerOne: "Crookshanks",
     answerTwo: "Scabbers",
     answerThree: "Hedwig",
-    correctAnswer: "Fang"
+    correctAnswer: "Fang",
+    correctAnswerImg: "../Images/fang.jpg",
+    wrongAnswerImg: "../Images/fangWrong.jpg"
   },
   {
     question:
@@ -65,7 +81,9 @@ let trivia = [
     answerOne: "Peter",
     answerTwo: "Edmund",
     answerThree: "Susan",
-    correctAnswer: "Lucy"
+    correctAnswer: "Lucy",
+    correctAnswerImg: "../Images/narnia.jpg",
+    wrongAnswerImg: "../Images/narniaWrong.jpg"
   },
   {
     question:
@@ -73,7 +91,9 @@ let trivia = [
     answerOne: "Domino's",
     answerTwo: "Little Ceasars",
     answerThree: "Pizza Hut",
-    correctAnswer: "Little Nero's "
+    correctAnswer: "Little Nero's ",
+    correctAnswerImg: "../Images/pizza.jpg",
+    wrongAnswerImg: "../Images/pizzaWrong.jpg"
   }
 ];
 
@@ -83,4 +103,6 @@ for (let i = 0; i < trivia.length; i++) {
   console.log(trivia[i].answerTwo);
   console.log(trivia[i].answerThree);
   console.log(trivia[i].correctAnswer);
+  console.log(trivia[i].correctAnswerImg);
+  console.log(trivia[i].wrongAnswerImg);
 }
