@@ -6,15 +6,23 @@ body {
 }
 
 header {
-	width: 100%;
-	height: 20%;
 	margin-bottom: 40px;
+}
+
+header::before {
+	content: '';
+	display: block;
+	position: absolute;
+	width: 100%;
+	height: 17%;
+	background: white;
+	opacity: 0.9;
+	z-index: -1;
 }
 
 h1 {
 	font-size: 72px;
 	height: 110px;
-	background: #fff;
 	padding: 2%;
 	color: #e50b14;
 }
@@ -66,7 +74,9 @@ h2 {
 
 #question {
 	font-size: 36px;
-	color: #29253e;
+	background: -webkit-linear-gradient( #5d5181, #3f3361);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
 
 p {
