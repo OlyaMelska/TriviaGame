@@ -27,9 +27,17 @@
   <body>
     <header><h1>Trivia Game</h1></header>
     <main>
-      <div id="content">
+      <div id="start-the-game">
+        <h2>Press the button to start the game</h2>
+        <div>
+          <img src="./Assets/Images/frontImg.gif" alt="20th century fox" />
+        </div>
+
+        <button id="start" class="btn btn-dark">Start the game</button>
+      </div>
+      <div id="content" class="hidden">
         <h2>Time remaining: <span id="time"></span></h2>
-        <h3 id="question"></h3>
+        <div id="question"></div>
         <div id="answerChoices"></div>
       </div>
     </main>
