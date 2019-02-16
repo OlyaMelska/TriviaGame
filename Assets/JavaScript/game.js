@@ -109,31 +109,43 @@ let questionContent = document.getElementById("question");
 let answerChoices = document.getElementById("answerChoices");
 let arrNumb = [];
 let index = 0;
+let triviaStarted = false;
+let showQuestion;
+let correctAnswersCount = 0;
+let wrongAnswersCount = 0;
+let displayAfterEachQuestion = document.getElementById("afterEachQuestion");
 
 btn.addEventListener("click", value => {
   initialContent.classList.add("hidden");
   initialContent.removeAttribute("id", "start-the-game");
   content.classList.remove("hidden");
-  // setTimer = setInterval(nextQuestion, 15000);
-  // console.log(setTimer);
-  nextQuestion();
+  startTheGame();
 });
+
+function startTheGame() {
+  if (!triviaStarted) {
+    showQuestion = setInterval(nextQuestion, 5000);
+    triviaStarted = true;
+  }
+}
+
+function stopTheGame() {
+  clearInterval(showQuestion);
+}
 
 function nextQuestion() {
   shuffleAnswers(arrNumb);
-  console.log(arrNumb);
   start();
-  let question = document.createElement("h3");
-  question.innerHTML = trivia[index].question;
-  questionContent.appendChild(question);
+  let displayedQuestion = document.getElementById("h3");
+  displayedQuestion.innerHTML = trivia[index].question;
 
-  let choiceOne = document.createElement("p");
+  let choiceOne = document.getElementById("p1");
   choiceOne.innerHTML = trivia[index].answerOne;
-  let choiceTwo = document.createElement("p");
+  let choiceTwo = document.getElementById("p2");
   choiceTwo.innerHTML = trivia[index].answerTwo;
-  let choiceThree = document.createElement("p");
+  let choiceThree = document.getElementById("p3");
   choiceThree.innerHTML = trivia[index].answerThree;
-  let choiceFour = document.createElement("p");
+  let choiceFour = document.getElementById("p4");
   choiceFour.innerHTML = trivia[index].correctAnswer;
   arrNumb.forEach(element => {
     if (element === 1) {
@@ -145,15 +157,28 @@ function nextQuestion() {
     } else if (element === 4) {
       answerChoices.appendChild(choiceFour);
     }
-    console.log(element);
+    console.log(answerChoices);
+    index++;
+    if (index === trivia.length - 1) {
+      index = 0;
+      stopTheGame();
+    }
   });
-  // console.log(trivia[i].question);
-  // console.log(trivia[i].answerOne);
-  // console.log(trivia[i].answerTwo);
-  // console.log(trivia[i].answerThree);
-  // console.log(trivia[i].correctAnswer);
-  // console.log(trivia[i].correctAnswerImg);
-  // console.log(trivia[i].wrongAnswerImg);
+  checkTheAnswer(choiceFour);
+}
+
+function checkTheAnswer(correct) {
+  answerChoices.addEventListener("click", event => {
+    let choice = event.target;
+    if (choice.innerHTML === correct.innerHTML) {
+      stop();
+      displayAfterEachQuestion.classList.remove("hidden");
+      console.log("You won");
+    } else {
+      stop();
+      console.log("You lost");
+    }
+  });
 }
 
 function shuffleAnswers(arr) {
@@ -166,10 +191,15 @@ function shuffleAnswers(arr) {
 }
 
 function start() {
+  time = 16;
   if (!clockRunning) {
     seconds = setInterval(count, 1000);
     clockRunning = true;
   }
+}
+function stop() {
+  clearInterval(seconds);
+  clockRunning = false;
 }
 
 function count() {
