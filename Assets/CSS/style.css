@@ -68,6 +68,10 @@ h2 {
 	font-size: 36px;
 }
 
+h3 {
+	font-size: 32px;
+}
+
 #start {
 	margin-top: 20px;
 }
@@ -87,4 +91,13 @@ p {
 
 p:hover {
 	color: #e50b14;
+}
+
+.images {
+	width: 40%;
+	height: 30%;
+}
+
+#correctAnswers, #wrongAnswers {
+	font-size: 14px;
 }

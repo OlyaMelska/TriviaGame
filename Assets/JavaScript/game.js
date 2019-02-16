@@ -6,8 +6,8 @@ let trivia = [
     answerTwo: "Davy Jones",
     answerThree: "Will Turner",
     correctAnswer: "Jack Sparrow",
-    correctAnswerImg: "./Images/jacksparrow.jpg",
-    wrongAnswerImg: "./Images/jackWrong.jpg"
+    correctAnswerImg: "./Assets/Images/jacksparrow.jpg",
+    wrongAnswerImg: "./Assets/Images/jackWrong.jpg"
   },
   {
     question:
@@ -16,8 +16,8 @@ let trivia = [
     answerTwo: "Ben Hardy",
     answerThree: "Bruno Mars",
     correctAnswer: "Rami Malek",
-    correctAnswerImg: "../Images/rami",
-    wrongAnswerImg: "../Images/ramiWrong.jpg"
+    correctAnswerImg: "./Assets/Images/rami",
+    wrongAnswerImg: "./Assets/Images/ramiWrong.jpg"
   },
   {
     question:
@@ -26,8 +26,8 @@ let trivia = [
     answerTwo: "Sorry",
     answerThree: "I will always love you",
     correctAnswer: "I just want to take another look at you",
-    correctAnswerImg: "../Images/star.jpg",
-    wrongAnswerImg: "../Images/starWrong.jpg"
+    correctAnswerImg: "./Assets/Images/star.jpg",
+    wrongAnswerImg: "./Assets/Images/starWrong.jpg"
   },
   {
     question: "Which of Daenerys Targaryen's three dragons are the largest?",
@@ -35,8 +35,8 @@ let trivia = [
     answerTwo: "Viserys",
     answerThree: "Rhaegal",
     correctAnswer: "Drogon",
-    correctAnswerImg: "../Images/drogon.jpg",
-    wrongAnswerImg: "../Images/drogonWrong.jpg"
+    correctAnswerImg: "./Assets/Images/drogon.jpg",
+    wrongAnswerImg: "./Assets/Images/drogonWrong.jpg"
   },
   {
     question: "What was wrong with the couch Ross returned to the store?",
@@ -44,8 +44,8 @@ let trivia = [
     answerTwo: "It had a stain",
     answerThree: "It was torn",
     correctAnswer: "It was cut in half",
-    correctAnswerImg: "../Images/couch.jpg",
-    wrongAnswerImg: "../Images/couchWrong.jpg"
+    correctAnswerImg: "./Assets/Images/couch.jpg",
+    wrongAnswerImg: "./Assets/Images/couchWrong.jpg"
   },
   {
     question: "'The Stranger Things' is a _____ original.",
@@ -53,8 +53,8 @@ let trivia = [
     answerTwo: "HBO",
     answerThree: "HULU",
     correctAnswer: "Netflix",
-    correctAnswerImg: "../Images/netflix.jpg",
-    wrongAnswerImg: "../Images/narniaWrong.jpg"
+    correctAnswerImg: "./Assets/Images/netflix.jpg",
+    wrongAnswerImg: "./Assets/Images/narniaWrong.jpg"
   },
   {
     question:
@@ -63,8 +63,8 @@ let trivia = [
     answerTwo: "Venom",
     answerThree: "Aquaman",
     correctAnswer: "Black Panther",
-    correctAnswerImg: "../Images/wakanda.jpg",
-    wrongAnswerImg: "../Images/wakandaWrong.jpg"
+    correctAnswerImg: "./Assets/Images/wakanda.jpg",
+    wrongAnswerImg: "./Assets/Images/wakandaWrong.jpg"
   },
   {
     question: "What is the name of Hagrid’s big dog?",
@@ -72,8 +72,8 @@ let trivia = [
     answerTwo: "Scabbers",
     answerThree: "Hedwig",
     correctAnswer: "Fang",
-    correctAnswerImg: "../Images/fang.jpg",
-    wrongAnswerImg: "../Images/fangWrong.jpg"
+    correctAnswerImg: "./Assets/Images/fang.jpg",
+    wrongAnswerImg: "./Assets/Images/fangWrong.jpg"
   },
   {
     question:
@@ -82,8 +82,8 @@ let trivia = [
     answerTwo: "Edmund",
     answerThree: "Susan",
     correctAnswer: "Lucy",
-    correctAnswerImg: "../Images/narnia.jpg",
-    wrongAnswerImg: "../Images/narniaWrong.jpg"
+    correctAnswerImg: "./Assets/Images/narnia.jpg",
+    wrongAnswerImg: "./Assets/Images/narniaWrong.jpg"
   },
   {
     question:
@@ -92,8 +92,8 @@ let trivia = [
     answerTwo: "Little Ceasars",
     answerThree: "Pizza Hut",
     correctAnswer: "Little Nero's ",
-    correctAnswerImg: "../Images/pizza.jpg",
-    wrongAnswerImg: "../Images/pizzaWrong.jpg"
+    correctAnswerImg: "./Assets/Images/pizza.jpg",
+    wrongAnswerImg: "./Assets/Images/pizzaWrong.jpg"
   }
 ];
 
@@ -101,19 +101,28 @@ let btn = document.getElementById("start");
 let content = document.getElementById("content");
 let initialContent = document.getElementById("start-the-game");
 let timeOutput = document.getElementById("time");
+let displayAfterEachQuestion = document.getElementById("afterEachQuestion");
+let displayedQuestion = document.getElementById("h3");
+let choiceOne = document.getElementById("p1");
+let choiceTwo = document.getElementById("p2");
+let choiceThree = document.getElementById("p3");
+let choiceFour = document.getElementById("p4");
+let result = document.getElementById("result");
+let resultImage = document.getElementById("resultImage");
+let displayCorrectAnswers = document.getElementById("correctAnswers");
+let displayWrongAnswers = document.getElementById("wrongAnswers");
+
+let correctImg, wrongImg;
 let seconds;
 let setTimer;
 let clockRunning = false;
 let time = 16;
-let questionContent = document.getElementById("question");
-let answerChoices = document.getElementById("answerChoices");
 let arrNumb = [];
 let index = 0;
 let triviaStarted = false;
 let showQuestion;
 let correctAnswersCount = 0;
 let wrongAnswersCount = 0;
-let displayAfterEachQuestion = document.getElementById("afterEachQuestion");
 
 btn.addEventListener("click", value => {
   initialContent.classList.add("hidden");
@@ -134,19 +143,17 @@ function stopTheGame() {
 }
 
 function nextQuestion() {
+  content.classList.remove("hidden");
+  displayAfterEachQuestion.classList.add("hidden");
   shuffleAnswers(arrNumb);
   start();
-  let displayedQuestion = document.getElementById("h3");
   displayedQuestion.innerHTML = trivia[index].question;
-
-  let choiceOne = document.getElementById("p1");
   choiceOne.innerHTML = trivia[index].answerOne;
-  let choiceTwo = document.getElementById("p2");
   choiceTwo.innerHTML = trivia[index].answerTwo;
-  let choiceThree = document.getElementById("p3");
   choiceThree.innerHTML = trivia[index].answerThree;
-  let choiceFour = document.getElementById("p4");
   choiceFour.innerHTML = trivia[index].correctAnswer;
+  correctImg = trivia[index].correctAnswerImg;
+  wrongImg = trivia[index].wrongAnswerImg;
   arrNumb.forEach(element => {
     if (element === 1) {
       answerChoices.appendChild(choiceOne);
@@ -164,21 +171,36 @@ function nextQuestion() {
       stopTheGame();
     }
   });
-  checkTheAnswer(choiceFour);
+  checkTheAnswer(choiceFour, correctImg, wrongImg);
 }
 
-function checkTheAnswer(correct) {
+function checkTheAnswer(correct, img1, img2) {
+  console.log("Index of Trivia array is " + index);
   answerChoices.addEventListener("click", event => {
     let choice = event.target;
+    content.classList.add("hidden");
+    displayAfterEachQuestion.classList.remove("hidden");
     if (choice.innerHTML === correct.innerHTML) {
       stop();
-      displayAfterEachQuestion.classList.remove("hidden");
-      console.log("You won");
+      correctAnswersCount++;
+      result.innerHTML = "<h3>Correct! Congrats!</h3>";
+      console.log(resultImage);
+      resultImage.src = img1;
+    } else if (choice.innerHTML !== correct.innerHTML) {
+      stop();
+      wrongAnswersCount++;
+      result.innerHTML =
+        "<h3>Wrong</h3><p>Correct answer was: " + correct.innerHTML + "</p>";
+      resultImage.src = img2;
     } else {
       stop();
-      console.log("You lost");
+      result.innerHTML = "<h3>You ran out of time!</h3>";
+      resultImage.src = "./Assets/Images/ranoutoftime.gif";
     }
+    displayCorrectAnswers.innerHTML = "Correct answers: " + correctAnswersCount;
+    displayWrongAnswers.innerHTML = "Wrong answers: " + wrongAnswersCount;
   });
+  startTheGame();
 }
 
 function shuffleAnswers(arr) {
