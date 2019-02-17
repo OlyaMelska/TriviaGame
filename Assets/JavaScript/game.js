@@ -131,6 +131,7 @@ let unansweredCount = 0;
 console.log(trivia.length);
 
 btn.addEventListener("click", gameStarted);
+answerChoices.addEventListener("click", checkTheAnswer);
 
 function gameStarted() {
   initialContent.classList.add("hidden");
@@ -142,7 +143,7 @@ function gameStarted() {
 
 function startTheGame() {
   if (!triviaStarted) {
-    showQuestion = setInterval(nextQuestion, 3000);
+    showQuestion = setInterval(nextQuestion, 2000);
     triviaStarted = true;
   }
 }
@@ -160,6 +161,7 @@ function nextQuestion() {
   } else {
     content.classList.remove("hidden");
     displayAfterEachQuestion.classList.add("hidden");
+    arrNumb = [];
     shuffleAnswers(arrNumb);
     start();
     displayedQuestion.innerHTML = trivia[index].question;
@@ -181,46 +183,44 @@ function nextQuestion() {
         answerChoices.appendChild(choiceFour);
       }
     });
-    checkTheAnswer(choiceFour, correctImg, wrongImg);
     index++;
   }
 }
 
-function checkTheAnswer(correct, img1, img2) {
+function checkTheAnswer() {
   console.log("Index of Trivia array is " + index);
-  answerChoices.addEventListener("click", () => {
-    console.log("Answer Choices " + answerChoices.innerHTML);
-    let choice = event.target;
-    console.log("choice is " + choice);
-    content.classList.add("hidden");
-    displayAfterEachQuestion.classList.remove("hidden");
-    if (choice.innerHTML === correct.innerHTML) {
-      console.log("chioce " + choice.innerHTML);
-      console.log("correct Choice " + correct.innerHTML);
-      stop();
-      correctAnswersCount++;
-      result.innerHTML = "<h3>Correct! Congrats!</h3>";
-      resultImage.src = img1;
-      console.log("correct answers in iF " + correctAnswersCount);
-    } else if (choice.innerHTML !== correct.innerHTML) {
-      stop();
-      wrongAnswersCount++;
-      result.innerHTML =
-        "<h3>Wrong</h3><p>Correct answer was: " + correct.innerHTML + "</p>";
-      resultImage.src = img2;
-    } else {
-      stop();
-      unansweredCount++;
-      result.innerHTML = "<h3>You ran out of time!</h3>";
-      resultImage.src = "./Assets/Images/ranoutoftime.gif";
-    }
-    displayCorrectAnswers.innerHTML = "Correct answers: " + correctAnswersCount;
-    displayWrongAnswers.innerHTML = "Wrong answers: " + wrongAnswersCount;
-  });
+  console.log("Answer Choices " + answerChoices.innerHTML);
+  let choice = event.target;
+  console.log("choice is " + choice);
+  content.classList.add("hidden");
+  displayAfterEachQuestion.classList.remove("hidden");
+  if (choice.innerHTML === choiceFour.innerHTML) {
+    console.log("chioce " + choice.innerHTML);
+    console.log("correct Choice " + choiceFour.innerHTML);
+    stop();
+    correctAnswersCount++;
+    result.innerHTML = "<h3>Correct! Congrats!</h3>";
+    resultImage.src = correctImg;
+    console.log("correct answers in iF " + correctAnswersCount);
+  } else if (choice.innerHTML !== choiceFour.innerHTML) {
+    stop();
+    wrongAnswersCount++;
+    result.innerHTML =
+      "<h3>Wrong</h3><p>Correct answer was: " + choiceFour.innerHTML + "</p>";
+    resultImage.src = wrongImg;
+  } else {
+    stop();
+    unansweredCount++;
+    result.innerHTML = "<h3>You ran out of time!</h3>";
+    resultImage.src = "./Assets/Images/ranoutoftime.gif";
+  }
+  displayCorrectAnswers.innerHTML = "Correct answers: " + correctAnswersCount;
+  displayWrongAnswers.innerHTML = "Wrong answers: " + wrongAnswersCount;
   startTheGame();
 }
 
 function gameResult() {
+  content.classList.add("hidden");
   displayAfterEachQuestion.classList.add("hidden");
   resultOfTheGame.classList.remove("hidden");
   gameResultOutput.innerHTML =
@@ -236,6 +236,9 @@ function gameResult() {
     displayAfterEachQuestion.classList.add("hidden");
     content.classList.remove("hidden");
     index = 0;
+    correctAnswersCount = 0;
+    wrongAnswersCount = 0;
+    unansweredCount = 0;
     gameStarted();
   });
 }
