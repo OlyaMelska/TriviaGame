@@ -128,10 +128,8 @@ let showQuestion;
 let correctAnswersCount = 0;
 let wrongAnswersCount = 0;
 let unansweredCount = 0;
-
-btn.addEventListener("click", value => {
-  gameStarted();
-});
+console.log(trivia.length);
+btn.addEventListener("click", gameStarted);
 
 function gameStarted() {
   initialContent.classList.add("hidden");
@@ -142,7 +140,7 @@ function gameStarted() {
 
 function startTheGame() {
   if (!triviaStarted) {
-    showQuestion = setInterval(nextQuestion, 5000);
+    showQuestion = setInterval(nextQuestion, 3000);
     triviaStarted = true;
   }
 }
@@ -177,13 +175,13 @@ function nextQuestion() {
     }
   });
 
-  if (index === trivia.length - 1) {
+  if (index === trivia.length) {
     index = 0;
     stop();
     stopTheGame();
+    displayAfterEachQuestion.classList.add("hidden");
     gameResult();
   } else {
-    console.log(choiceFour);
     checkTheAnswer(choiceFour, correctImg, wrongImg);
   }
   index++;
@@ -192,8 +190,9 @@ function nextQuestion() {
 function checkTheAnswer(correct, img1, img2) {
   console.log("Index of Trivia array is " + index);
   answerChoices.addEventListener("click", () => {
-    console.log("Answer Choices " + answerChoices);
+    console.log("Answer Choices " + answerChoices.innerHTML);
     let choice = event.target;
+    console.log("choice is " + choice);
     content.classList.add("hidden");
     displayAfterEachQuestion.classList.remove("hidden");
     if (choice.innerHTML === correct.innerHTML) {
@@ -235,6 +234,8 @@ function gameResult() {
     "</p>";
   startOver.addEventListener("click", value => {
     resultOfTheGame.classList.add("hidden");
+    index = 0;
+    answerChoices.innerHTML = "";
     gameStarted();
   });
 }
