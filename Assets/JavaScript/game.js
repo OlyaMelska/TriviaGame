@@ -114,7 +114,7 @@ let displayWrongAnswers = document.getElementById("wrongAnswers");
 let resultOfTheGame = document.getElementById("gameResult");
 let gameResultOutput = document.getElementById("gameResultOutput");
 let startOver = document.getElementById("startOver");
-let answerOne = document.getElementById("answerChoices");
+let answerChoices = document.getElementById("answerChoices");
 
 let correctImg, wrongImg;
 let seconds;
@@ -129,12 +129,14 @@ let correctAnswersCount = 0;
 let wrongAnswersCount = 0;
 let unansweredCount = 0;
 console.log(trivia.length);
+
 btn.addEventListener("click", gameStarted);
 
 function gameStarted() {
   initialContent.classList.add("hidden");
   initialContent.removeAttribute("id", "start-the-game");
   content.classList.remove("hidden");
+  nextQuestion();
   startTheGame();
 }
 
@@ -150,41 +152,38 @@ function stopTheGame() {
 }
 
 function nextQuestion() {
-  content.classList.remove("hidden");
-  displayAfterEachQuestion.classList.add("hidden");
-  shuffleAnswers(arrNumb);
-  start();
-
-  displayedQuestion.innerHTML = trivia[index].question;
-  choiceOne.innerHTML = trivia[index].answerOne;
-  choiceTwo.innerHTML = trivia[index].answerTwo;
-  choiceThree.innerHTML = trivia[index].answerThree;
-  choiceFour.innerHTML = trivia[index].correctAnswer;
-  correctImg = trivia[index].correctAnswerImg;
-  wrongImg = trivia[index].wrongAnswerImg;
-
-  arrNumb.forEach(element => {
-    if (element === 1) {
-      answerChoices.appendChild(choiceOne);
-    } else if (element === 2) {
-      answerChoices.appendChild(choiceTwo);
-    } else if (element === 3) {
-      answerChoices.appendChild(choiceThree);
-    } else if (element === 4) {
-      answerChoices.appendChild(choiceFour);
-    }
-  });
-
   if (index === trivia.length) {
     index = 0;
     stop();
     stopTheGame();
-    displayAfterEachQuestion.classList.add("hidden");
     gameResult();
   } else {
+    content.classList.remove("hidden");
+    displayAfterEachQuestion.classList.add("hidden");
+    shuffleAnswers(arrNumb);
+    start();
+    displayedQuestion.innerHTML = trivia[index].question;
+    choiceOne.innerHTML = trivia[index].answerOne;
+    choiceTwo.innerHTML = trivia[index].answerTwo;
+    choiceThree.innerHTML = trivia[index].answerThree;
+    choiceFour.innerHTML = trivia[index].correctAnswer;
+    correctImg = trivia[index].correctAnswerImg;
+    wrongImg = trivia[index].wrongAnswerImg;
+
+    arrNumb.forEach(element => {
+      if (element === 1) {
+        answerChoices.appendChild(choiceOne);
+      } else if (element === 2) {
+        answerChoices.appendChild(choiceTwo);
+      } else if (element === 3) {
+        answerChoices.appendChild(choiceThree);
+      } else if (element === 4) {
+        answerChoices.appendChild(choiceFour);
+      }
+    });
     checkTheAnswer(choiceFour, correctImg, wrongImg);
+    index++;
   }
-  index++;
 }
 
 function checkTheAnswer(correct, img1, img2) {
@@ -234,8 +233,9 @@ function gameResult() {
     "</p>";
   startOver.addEventListener("click", value => {
     resultOfTheGame.classList.add("hidden");
+    displayAfterEachQuestion.classList.add("hidden");
+    content.classList.remove("hidden");
     index = 0;
-    answerChoices.innerHTML = "";
     gameStarted();
   });
 }
