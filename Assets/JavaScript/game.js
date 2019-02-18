@@ -197,7 +197,7 @@ function checkTheAnswer() {
   }
   displayCorrectAnswers.innerHTML = "Correct answers: " + correctAnswersCount;
   displayWrongAnswers.innerHTML = "Wrong answers: " + wrongAnswersCount;
-  setTimeout(nextQuestion, 2000);
+  setTimeout(nextQuestion, 3000);
 }
 
 function gameResult() {
