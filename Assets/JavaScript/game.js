@@ -54,7 +54,7 @@ let trivia = [
     answerThree: "HULU",
     correctAnswer: "Netflix",
     correctAnswerImg: "./Assets/Images/netflix.jpg",
-    wrongAnswerImg: "./Assets/Images/narniaWrong.jpg"
+    wrongAnswerImg: "./Assets/Images/netflixWrong.jpg"
   },
   {
     question:
@@ -124,11 +124,9 @@ let time = 16;
 let arrNumb = [];
 let index = 0;
 let triviaStarted = false;
-let showQuestion;
 let correctAnswersCount = 0;
 let wrongAnswersCount = 0;
 let unansweredCount = 0;
-console.log(trivia.length);
 
 btn.addEventListener("click", gameStarted);
 answerChoices.addEventListener("click", checkTheAnswer);
@@ -137,86 +135,69 @@ function gameStarted() {
   initialContent.classList.add("hidden");
   initialContent.removeAttribute("id", "start-the-game");
   content.classList.remove("hidden");
-  nextQuestion();
-  startTheGame();
-}
-
-function startTheGame() {
-  if (!triviaStarted) {
-    showQuestion = setInterval(nextQuestion, 2000);
-    triviaStarted = true;
-  }
-}
-
-function stopTheGame() {
-  clearInterval(showQuestion);
+  displayQuestion();
 }
 
 function nextQuestion() {
+  index++;
   if (index === trivia.length) {
     index = 0;
     stop();
-    stopTheGame();
-    gameResult();
+    setTimeout(gameResult, 3000);
   } else {
-    content.classList.remove("hidden");
-    displayAfterEachQuestion.classList.add("hidden");
-    arrNumb = [];
-    shuffleAnswers(arrNumb);
-    start();
-    displayedQuestion.innerHTML = trivia[index].question;
-    choiceOne.innerHTML = trivia[index].answerOne;
-    choiceTwo.innerHTML = trivia[index].answerTwo;
-    choiceThree.innerHTML = trivia[index].answerThree;
-    choiceFour.innerHTML = trivia[index].correctAnswer;
-    correctImg = trivia[index].correctAnswerImg;
-    wrongImg = trivia[index].wrongAnswerImg;
-
-    arrNumb.forEach(element => {
-      if (element === 1) {
-        answerChoices.appendChild(choiceOne);
-      } else if (element === 2) {
-        answerChoices.appendChild(choiceTwo);
-      } else if (element === 3) {
-        answerChoices.appendChild(choiceThree);
-      } else if (element === 4) {
-        answerChoices.appendChild(choiceFour);
-      }
-    });
-    index++;
+    displayQuestion();
   }
 }
 
+function displayQuestion() {
+  content.classList.remove("hidden");
+  displayAfterEachQuestion.classList.add("hidden");
+  arrNumb = [];
+  shuffleAnswers(arrNumb);
+  start();
+  displayedQuestion.innerHTML = trivia[index].question;
+  choiceOne.innerHTML = trivia[index].answerOne;
+  choiceTwo.innerHTML = trivia[index].answerTwo;
+  choiceThree.innerHTML = trivia[index].answerThree;
+  choiceFour.innerHTML = trivia[index].correctAnswer;
+  correctImg = trivia[index].correctAnswerImg;
+  wrongImg = trivia[index].wrongAnswerImg;
+
+  arrNumb.forEach(element => {
+    if (element === 1) {
+      answerChoices.appendChild(choiceOne);
+    } else if (element === 2) {
+      answerChoices.appendChild(choiceTwo);
+    } else if (element === 3) {
+      answerChoices.appendChild(choiceThree);
+    } else if (element === 4) {
+      answerChoices.appendChild(choiceFour);
+    }
+  });
+}
+
 function checkTheAnswer() {
-  console.log("Index of Trivia array is " + index);
-  console.log("Answer Choices " + answerChoices.innerHTML);
   let choice = event.target;
-  console.log("choice is " + choice);
   content.classList.add("hidden");
   displayAfterEachQuestion.classList.remove("hidden");
   if (choice.innerHTML === choiceFour.innerHTML) {
-    console.log("chioce " + choice.innerHTML);
-    console.log("correct Choice " + choiceFour.innerHTML);
     stop();
     correctAnswersCount++;
-    result.innerHTML = "<h3>Correct! Congrats!</h3>";
+    result.innerHTML = "<h3 class='red'>Correct! Congrats!</h3>";
     resultImage.src = correctImg;
     console.log("correct answers in iF " + correctAnswersCount);
-  } else if (choice.innerHTML !== choiceFour.innerHTML) {
+  } else {
     stop();
     wrongAnswersCount++;
     result.innerHTML =
-      "<h3>Wrong</h3><p>Correct answer was: " + choiceFour.innerHTML + "</p>";
+      "<h3 class='red'>Wrong</h3><p>Correct answer was: " +
+      choiceFour.innerHTML +
+      "</p>";
     resultImage.src = wrongImg;
-  } else {
-    stop();
-    unansweredCount++;
-    result.innerHTML = "<h3>You ran out of time!</h3>";
-    resultImage.src = "./Assets/Images/ranoutoftime.gif";
   }
   displayCorrectAnswers.innerHTML = "Correct answers: " + correctAnswersCount;
   displayWrongAnswers.innerHTML = "Wrong answers: " + wrongAnswersCount;
-  startTheGame();
+  setTimeout(nextQuestion, 2000);
 }
 
 function gameResult() {
@@ -255,6 +236,7 @@ function shuffleAnswers(arr) {
 function start() {
   time = 16;
   if (!clockRunning) {
+    console.log(time);
     seconds = setInterval(count, 1000);
     clockRunning = true;
   }
@@ -266,8 +248,17 @@ function stop() {
 
 function count() {
   time--;
-  let result = timeConverter(time);
-  timeOutput.innerHTML = result;
+  let convertedTime = timeConverter(time);
+  timeOutput.innerHTML = convertedTime;
+  if (time === 0) {
+    stop();
+    content.classList.add("hidden");
+    displayAfterEachQuestion.classList.remove("hidden");
+    unansweredCount++;
+    result.innerHTML = "<h3>You ran out of time!</h3>";
+    resultImage.src = "./Assets/Images/ranoutoftime.gif";
+    setTimeout(nextQuestion, 3000);
+  }
 }
 
 function timeConverter(t) {
