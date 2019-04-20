@@ -143,7 +143,7 @@ function nextQuestion() {
   if (index === trivia.length) {
     index = 0;
     stop();
-    setTimeout(gameResult, 3000);
+    setTimeout(gameResult, 1500);
   } else {
     displayQuestion();
   }
