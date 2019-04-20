@@ -146,9 +146,16 @@ p:hover {
     h3,
     #h3 {
         font-size: 18px;
+
     }
 
-    #p1,
+    #question {
+        background: none;
+        -webkit-text-fill-color: #3f3361;
+        color: #3f3361;
+    }
+
+    on #p1,
     #p2,
     #p3,
     #p4 {
